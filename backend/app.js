@@ -4,7 +4,7 @@ const axios = require("axios");
 const NodeCache = require("node-cache");
 require("dotenv").config();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 const myCache = new NodeCache({ stdTTL: 24 * 60 * 60 });
 

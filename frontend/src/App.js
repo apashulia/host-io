@@ -35,7 +35,7 @@ function App() {
       setIsLoading(true);
       const data = await Promise.allSettled(
         arrOfDomains.map(async (domain) => {
-          const res = await fetch(`http://localhost:3000/${domain}`);
+          const res = await fetch(`http://localhost:3001/${domain}`);
           return await res.json();
         })
       );
