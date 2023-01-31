@@ -1,5 +1,5 @@
 import React from "react";
-import { ReactComponent as LoadingIcon } from "../../essets/icons/loading-icon.svg";
+import { ReactComponent as LoadingIcon } from "../../assets/icons/loading-icon.svg";
 
 const CustomLoading = ({ isLoading }) => {
   return isLoading ? (

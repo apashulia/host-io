@@ -1,19 +1,17 @@
 import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import { CustomForm, CustomLoading, CustomResult } from "./components";
-
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./app.scss";
+import { CustomForm, CustomResult } from "./components";
 
 function App() {
   const [domains, setDomains] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (e, inputValue, setInputValue) => {
     e.preventDefault();
     const arrOfDomains = inputValue.split("\n");
 
-    const areDomainsHaveValidNames = arrOfDomains.reduce((acc, domaine, i) => {
+    const isValidDomain = arrOfDomains.reduce((acc, domaine, i) => {
       if (
         !/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(
           domaine
@@ -31,24 +29,16 @@ function App() {
         ? toast.warning(`Only 10 domains are allowed per request`)
         : "";
 
-    if (areDomainsHaveValidNames && !isDomainsMoreThenTen) {
-      setIsLoading(true);
-      const data = await Promise.allSettled(
-        arrOfDomains.map(async (domain) => {
-          const res = await fetch(`http://localhost:3001/${domain}`);
-          return await res.json();
-        })
-      );
+    if (isValidDomain && !isDomainsMoreThenTen) {
       setInputValue("");
-      setDomains(data);
-      setIsLoading(false);
+      setDomains(arrOfDomains);
     }
   };
 
   return (
     <div className="app">
       <CustomForm onSubmit={onSubmit} />
-      <CustomResult domains={domains} />
+      <CustomResult domains={domains}/>
       <ToastContainer
         position="top-center"
         autoClose={3000}
@@ -61,7 +51,6 @@ function App() {
         pauseOnHover
         theme="colored"
       />
-      <CustomLoading isLoading={isLoading} />
     </div>
   );
 }
